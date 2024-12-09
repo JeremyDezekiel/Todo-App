@@ -1,3 +1,29 @@
 {
-    "todos": []
+    "todos": [
+        {
+            "id": "s2f6",
+            "name": "Belajar",
+            "desc": "Belajar Matematika"
+        },
+        {
+            "id": "g4h4",
+            "name": "Belajar",
+            "desc": "Belajar Bahasa Indonesia"
+        },
+        {
+            "id": "s6h1",
+            "name": "Belajar",
+            "desc": "Belajar Bahasa Inggris"
+        },
+        {
+            "id": "g9s2",
+            "name": "Belajar",
+            "desc": "Belajar IPA"
+        },
+        {
+            "id": "ebb6",
+            "name": "Belajar",
+            "desc": "Belajar IPS"
+        }
+    ]
 }
