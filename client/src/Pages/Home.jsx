@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Home.css'
-import LiveTime from '../components/LiveTime'
+import Navbar from '../components/Navbar/Navbar'
+import CardsProcess from '../components/CardsProcess/CardsProcess'
+import Calendar from '../components/Calendar/Calendar'
 
 const Base_URL = 'http://localhost:3000'
 
@@ -31,16 +33,8 @@ function Home() {
 
     return (
         <div className='container mx-auto'>
+            <Navbar/>
             <div>
-                <div className='flex justify-between my-5'>
-                    <div className=''>
-                        <img src='' alt='' />
-                        <span>Logo</span>
-                    </div>
-                    <div className=''>
-                        <LiveTime/>
-                    </div>
-                </div>
                 <div className='flex justify-between mb-5'>
                     <div>
                         <h1 className='font-bold text-5xl text-[#80476f]'>memoire.</h1>
@@ -49,6 +43,14 @@ function Home() {
                         <form>
                             <input type='text' placeholder='Search' className='search w-full border-2 border-transparent bg-no-repeat bg-[10px] py-3 pe-5 ps-11 rounded-full text-base bg-[#C9CACA] text-[#a6a6a6]' />
                         </form>
+                    </div>
+                </div>
+                <div className='grid grid-cols-3'>
+                    <div className='col-span-2'>
+                        <CardsProcess/>
+                    </div>
+                    <div>
+                        <Calendar/>
                     </div>
                 </div>
                 <div>
