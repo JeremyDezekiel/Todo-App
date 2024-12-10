@@ -2,28 +2,23 @@
     "todos": [
         {
             "id": "s2f6",
-            "title": "Belajar Senin",
-            "desc": "Belajar Matematika"
+            "title": "Belajar Senin"
         },
         {
             "id": "g4h4",
-            "title": "Belajar Selasa",
-            "desc": "Belajar Bahasa Indonesia"
+            "title": "Belajar Selasa"
         },
         {
             "id": "s6h1",
-            "title": "Belajar Rabu",
-            "desc": "Belajar Bahasa Inggris"
+            "title": "Belajar Rabu"
         },
         {
             "id": "g9s2",
-            "title": "Belajar Kamis",
-            "desc": "Belajar IPA"
+            "title": "Belajar Kamis"
         },
         {
             "id": "ebb6",
-            "title": "Belajar Jumat",
-            "desc": "Belajar IPS"
+            "title": "Belajar Jumat"
         }
     ]
 }

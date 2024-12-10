@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import './Home.css'
+import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
 import CardsProcess from '../components/CardsProcess/CardsProcess'
 import Calendar from '../components/Calendar/Calendar'
+import CardsTask from '../components/CardsTask/CardsTask'
+import profilePicture from '../assets/ProfilePicture.png'
 
 const Base_URL = 'http://localhost:3000'
 
 function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
-    const [notes, setNotes] = useState([])
+    const [note, setNote] = useState({
+        title: '',
+    })
 
-
-    const fetchNotes = async () => {
-        setIsLoading(true)
-        setError(null)
+    const addNote = async (e) => {
+        e.preventDefault()
         try {
-            const { data } = await axios.get(Base_URL + '/todos')
-            setNotes(data)
+            const { data } = await axios.post(Base_URL + '/todos', note)
+            console.log(data)
         } catch (err) {
             console.error(err)
             setError(err)
@@ -27,17 +29,17 @@ function Home() {
         }
     }
 
-    useEffect(() => {
-        fetchNotes()
-    }, [])
-
     return (
         <div className='container mx-auto'>
             <Navbar/>
             <div>
                 <div className='flex justify-between mb-5'>
-                    <div>
-                        <h1 className='font-bold text-5xl text-[#80476f]'>memoire.</h1>
+                    <div className='flex gap-3'>
+                        <img className='w-14' src={profilePicture} alt='profilepicture'/>
+                        <div>
+                            <h1 className='text-2xl font-semibold'>Hi, JeanneDe</h1>
+                            <span className='text-xs'>Your Daily adventure starts now</span>
+                        </div>
                     </div>
                     <div>
                         <form>
@@ -45,50 +47,21 @@ function Home() {
                         </form>
                     </div>
                 </div>
-                <div className='grid grid-cols-3'>
-                    <div className='col-span-2'>
+                <div className='grid grid-rows-2 grid-cols-3 gap-3'>
+                    <div className='col-span-2 row-span-2'>
                         <CardsProcess/>
-                    </div>
-                    <div>
-                        <Calendar/>
-                    </div>
-                </div>
-                <div>
-                    <div className='mb-5'>
-                        <form>
-                            <input type='text' placeholder='TITTLE' className='border' />
-                            <button type='submit' className='border rounded-lg py-1 px-5 border-transparent font-medium bg-[#1a1a1a] cursor-pointer text-white hover:bg-[#646cff] ml-10'>+</button>
-                        </form>
-                    </div>
-                    <div className='grid grid-flow-col grid-cols-4'>
-                        <div className='col-span-3'>
-                            <div className='mb-5'>
-                                <h1 className='font-bold text-5xl'>My List</h1>
-                            </div>
-                            <div>
-                                <ul className='grid grid-flow-row gap-10'>
-                                    {
-                                        notes?.map(note => {
-                                            return (
-                                                <li key={note.id} className='border py-3 px-10 flex justify-between items-center'>
-                                                    <div>
-                                                        <input type="checkbox" />
-                                                        <label>{note.title}</label>
-                                                    </div>
-                                                    <div>
-                                                        <button className="text-black">
-                                                            &gt;
-                                                        </button>
-                                                    </div>
-                                                </li>
-                                            )
-                                        })
-                                    }
-                                </ul>
-                            </div>
-                        </div>
+                        <h1 className='font-bold text-5xl mb-5 mt-5'>My List</h1>
                         <div>
-
+                            <CardsTask note={note}/>
+                        </div>
+                    </div>
+                    <div className='row-span-3'>
+                        <Calendar/>
+                        <div className='mt-4'>
+                            <form className='flex gap-2' onSubmit={(e) => addNote(e)}>
+                                <input type='text' placeholder='Write Your New Task' className='border rounded-lg py-3 px-3 w-full' value={note.title} onChange={(e) => setNote({ ...note, title:e.target.value})}/>
+                                <button className='font-bold text-[#7d7c7c]' type='submit'>+AddList</button>
+                            </form>
                         </div>
                     </div>
                 </div>
