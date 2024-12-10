@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Home.css'
+import LiveTime from '../components/LiveTime'
 
 const Base_URL = 'http://localhost:3000'
 
@@ -37,7 +38,7 @@ function Home() {
                         <span>Logo</span>
                     </div>
                     <div className=''>
-                        <span>09/12/2024</span>
+                        <LiveTime/>
                     </div>
                 </div>
                 <div className='flex justify-between mb-5'>
@@ -57,29 +58,36 @@ function Home() {
                             <button type='submit' className='border rounded-lg py-1 px-5 border-transparent font-medium bg-[#1a1a1a] cursor-pointer text-white hover:bg-[#646cff] ml-10'>+</button>
                         </form>
                     </div>
-                    <div className='mb-5'>
-                        <h1 className='font-bold text-5xl'>My List</h1>
-                    </div>
-                    <div>
-                        <ul className='grid grid-flow-row gap-10'>
-                            {
-                                notes?.map(note => {
-                                    return (
-                                        <li key={note.id} className='border py-3 px-10 flex justify-between items-center'>
-                                            <div>
-                                                <input type="checkbox"/>
-                                                <label>{note.title}</label>
-                                            </div>
-                                            <div>
-                                                <button className="text-black">
-                                                    &gt;
-                                                </button>
-                                            </div>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
+                    <div className='grid grid-flow-col grid-cols-4'>
+                        <div className='col-span-3'>
+                            <div className='mb-5'>
+                                <h1 className='font-bold text-5xl'>My List</h1>
+                            </div>
+                            <div>
+                                <ul className='grid grid-flow-row gap-10'>
+                                    {
+                                        notes?.map(note => {
+                                            return (
+                                                <li key={note.id} className='border py-3 px-10 flex justify-between items-center'>
+                                                    <div>
+                                                        <input type="checkbox" />
+                                                        <label>{note.title}</label>
+                                                    </div>
+                                                    <div>
+                                                        <button className="text-black">
+                                                            &gt;
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
                     </div>
                 </div>
             </div>
