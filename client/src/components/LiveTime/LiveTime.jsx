@@ -5,10 +5,13 @@ function LiveTime() {
     const [time, setTime] = useState(currentDate.toLocaleDateString())
 
     useEffect(() => {
-        setInterval(() => {
+        const interval = setInterval(() => {
             setCurrentDate(new Date())
             setTime(new Date().toLocaleTimeString())
         }, 1000)
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
 
     const monthNames = [
