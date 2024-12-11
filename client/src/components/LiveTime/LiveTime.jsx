@@ -5,7 +5,7 @@ function LiveTime() {
     const [time, setTime] = useState(currentDate.toLocaleDateString())
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        setInterval(() => {
             setCurrentDate(new Date())
             setTime(new Date().toLocaleTimeString())
         }, 1000)

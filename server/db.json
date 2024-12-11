@@ -1,24 +1,14 @@
 {
-    "todos": [
-        {
-            "id": "s2f6",
-            "title": "Belajar Senin"
-        },
-        {
-            "id": "g4h4",
-            "title": "Belajar Selasa"
-        },
-        {
-            "id": "s6h1",
-            "title": "Belajar Rabu"
-        },
-        {
-            "id": "g9s2",
-            "title": "Belajar Kamis"
-        },
-        {
-            "id": "ebb6",
-            "title": "Belajar Jumat"
-        }
-    ]
+  "todos": [
+    {
+      "id": "3d96",
+      "title": "Belajar FetchData",
+      "datetime": "2024-12-11T09:40:18.643Z"
+    },
+    {
+      "id": "83e9",
+      "title": "Belajar Hooks",
+      "datetime": "2024-12-11T10:16:34.736Z"
+    }
+  ]
 }

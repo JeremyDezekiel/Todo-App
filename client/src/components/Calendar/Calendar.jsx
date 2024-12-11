@@ -48,7 +48,7 @@ function Calendar() {
                 <button className='m-[5px] py-[5px] px-[10px] cursor-pointer bg-[#007BFF] text-white rounded-[5px] hover:bg-[#0056b3]' onClick={() => changeMonth(1)}>Next</button>
             </div>
             <div>
-                <div className='bg-[#95E1FF] grid grid-cols-7 gap-2'>
+                <div className='bg-[#95E1FF] grid grid-cols-7 gap-2 mb-2'>
                     {dayNames.map((day, index) => (
                         <div key={index} className='p-3 text-center text-sm font-bold'>{day}</div>
                     ))}
@@ -67,7 +67,6 @@ function Calendar() {
                         }
                     })}
                 </div>
-
             </div>
         </div>
     )

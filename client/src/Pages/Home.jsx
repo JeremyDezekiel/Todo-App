@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Home.css'
 import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
@@ -12,15 +12,40 @@ const Base_URL = 'http://localhost:3000'
 function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [notes, setNotes] = useState([])
     const [note, setNote] = useState({
         title: '',
     })
 
+    const fetchNotes = async () => {
+        setIsLoading(true)
+        setError(null)
+        try {
+            const { data } = await axios.get(Base_URL + '/todos?_sort=-datetime')
+            setNotes(data)
+        } catch (err) {
+            console.error(err)
+            setError(err)
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 1000)
+        }
+    }
+
     const addNote = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
+        setError(null)
         try {
-            const { data } = await axios.post(Base_URL + '/todos', note)
-            console.log(data)
+            await axios.post(Base_URL + '/todos', {
+                title: note.title,
+                datetime: new Date()
+            })
+            setNote({
+                title: '',
+            })
+            fetchNotes()
         } catch (err) {
             console.error(err)
             setError(err)
@@ -28,6 +53,22 @@ function Home() {
             setIsLoading(false)
         }
     }
+
+    const deleteNote = async (id) => {
+        try {
+            await axios.delete(Base_URL + '/todos/' + id)
+            fetchNotes()
+        } catch (error) {
+            console.error(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchNotes()
+    }, [])
 
     return (
         <div className='container mx-auto'>
@@ -52,7 +93,7 @@ function Home() {
                         <CardsProcess/>
                         <h1 className='font-bold text-5xl mb-5 mt-5'>My List</h1>
                         <div>
-                            <CardsTask note={note}/>
+                            <CardsTask notes={notes} deleteNote={deleteNote}/>
                         </div>
                     </div>
                     <div className='row-span-3'>
