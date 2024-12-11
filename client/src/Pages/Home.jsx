@@ -12,8 +12,12 @@ const Base_URL = 'http://localhost:3000'
 function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [search, setSearch] = useState('')
     const [notes, setNotes] = useState([])
     const [note, setNote] = useState({
+        title: '',
+    })
+    const [editValue, setEditValue] = useState({
         title: '',
     })
 
@@ -40,9 +44,32 @@ function Home() {
         try {
             await axios.post(Base_URL + '/todos', {
                 title: note.title,
-                datetime: new Date()
+                datetime: new Date(),
+                Status: "On going"
             })
             setNote({
+                title: '',
+            })
+            fetchNotes()
+        } catch (err) {
+            console.error(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const editNote = async (e, id) => {
+        e.preventDefault()
+        setIsLoading(true)
+        setError(null)
+        try {
+            await axios.put(Base_URL + '/todos/' + id, {
+                title: editValue.title,
+                datetime: new Date(),
+                Status: "On going"
+            })
+            setEditValue({
                 title: '',
             })
             fetchNotes()
@@ -70,6 +97,11 @@ function Home() {
         fetchNotes()
     }, [])
 
+    // 
+    useEffect(() => {
+        
+    }, [search])
+
     return (
         <div className='container mx-auto'>
             <Navbar/>
@@ -84,7 +116,7 @@ function Home() {
                     </div>
                     <div>
                         <form>
-                            <input type='text' placeholder='Search' className='search w-full border-2 border-transparent bg-no-repeat bg-[10px] py-3 pe-5 ps-11 rounded-full text-base bg-[#C9CACA] text-[#a6a6a6]' />
+                            <input type='text' placeholder='Search' className='search w-full border-2 border-transparent bg-no-repeat bg-[10px] py-3 pe-5 ps-11 rounded-full text-base bg-[#C9CACA] text-[#a6a6a6]' onChange={(e) => setSearch(e.target.value)}/>
                         </form>
                     </div>
                 </div>
@@ -93,7 +125,7 @@ function Home() {
                         <CardsProcess/>
                         <h1 className='font-bold text-5xl mb-5 mt-5'>My List</h1>
                         <div>
-                            <CardsTask notes={notes} deleteNote={deleteNote}/>
+                            <CardsTask notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error}/>
                         </div>
                     </div>
                     <div className='row-span-3'>
