@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import editIcon from '../../assets/edit-icon.png'
 import deleteIcon from '../../assets/delete-icon.png'
 
-function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoading, error }) {
+function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoading, error, editStatus, editStatusProgress, setEditStatusProgress, filteredNotes }) {
     const [editMode, setEditMode] = useState('')
     const [editStatusMode, setEditStatusMode] = useState('')
 
@@ -13,6 +13,7 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
 
     const handleEditStatus = ((note) => {
         setEditStatusMode(note.id)
+        setEditStatusProgress({ title: note.title, status: note.status})
     })
 
     return (
