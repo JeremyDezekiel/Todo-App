@@ -4,10 +4,15 @@ import deleteIcon from '../../assets/delete-icon.png'
 
 function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoading, error }) {
     const [editMode, setEditMode] = useState('')
+    const [editStatusMode, setEditStatusMode] = useState('')
 
     const handleEdit = ((note) => {
         setEditMode(note.id)
-        setEditValue({title: note.title})
+        setEditValue({ title: note.title, status: note.status})
+    })
+
+    const handleEditStatus = ((note) => {
+        setEditStatusMode(note.id)
     })
 
     return (
@@ -33,12 +38,12 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
                                     editNote(e, note.id)
                                     setEditMode('')
                                 }}>
-                                    <input className='w-full h-full text-xl' type='text' value={editValue.title} onChange={(e) => setEditValue({...editValue, title:e.target.value})}/>
+                                    <input className='w-full h-full text-xl' type='text' value={editValue.title} onChange={(e) => setEditValue({ ...editValue, title: e.target.value })} />
                                 </form>
                             ) : (
                                 <>
                                     <div className='flex items-center gap-2'>
-                                        <button className='border w-5 h-5 rounded-full bg-[#FFDE59]' onClick={() => editStatus(note.id)}></button>
+                                        <button className='border w-5 h-5 rounded-full bg-[#E0E0E0]' onClick={() => handleEditStatus(note)}></button>
                                         <p className='text-xl'>{note.title}</p>
                                     </div>
                                     <div className='flex gap-4 items-center'>
@@ -51,6 +56,12 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
                     </div>
                 ))
             )}
+            <div className='grid grid-cols-2 gap-2' onSubmit={(e) => editStatus(e)}>
+                <button className='border w-5 h-5 rounded-full bg-[#5694F2]'></button>
+                <button className='border w-5 h-5 rounded-full bg-[#FEC347]'></button>
+                <button className='border w-5 h-5 rounded-full bg-[#53C2C5]'></button>
+                <button className='border w-5 h-5 rounded-full bg-[#F26E56]'></button>
+            </div>
         </div>
     )
 }

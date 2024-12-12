@@ -20,6 +20,9 @@ function Home() {
     const [editValue, setEditValue] = useState({
         title: '',
     })
+    const [editStatusProgress, setEditStatusProgress] = useState({
+        status: 'On Going'
+    })
 
     const fetchNotes = async () => {
         setIsLoading(true)
@@ -45,7 +48,7 @@ function Home() {
             await axios.post(Base_URL + '/todos', {
                 title: note.title,
                 datetime: new Date(),
-                Status: "On going"
+                status: 'On Going'
             })
             setNote({
                 title: '',
@@ -67,10 +70,11 @@ function Home() {
             await axios.put(Base_URL + '/todos/' + id, {
                 title: editValue.title,
                 datetime: new Date(),
-                Status: "On going"
+                status: editValue.status
             })
             setEditValue({
                 title: '',
+                status: ''
             })
             fetchNotes()
         } catch (err) {
@@ -86,6 +90,27 @@ function Home() {
             await axios.delete(Base_URL + '/todos/' + id)
             fetchNotes()
         } catch (error) {
+            console.error(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const editStatus = async (id) => {
+        setIsLoading(true)
+        setError(null)
+        try {
+            await axios.put(Base_URL + '/todos/' + id, {
+                title: editStatusProgress.title,
+                datetime: new Date(),
+                status: editStatusProgress.status
+            })
+            setEditStatusProgress({
+                status: '',
+            })
+            fetchNotes()
+        } catch (err) {
             console.error(err)
             setError(err)
         } finally {
