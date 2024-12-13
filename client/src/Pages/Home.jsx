@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './Home.css'
-import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
 import CardsProcess from '../components/CardsProcess/CardsProcess'
 import Calendar from '../components/Calendar/Calendar'
@@ -9,8 +8,7 @@ import profilePicture from '../assets/ProfilePicture.png'
 import Swal from 'sweetalert2'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-const Base_URL = 'http://localhost:3000'
+import NoteAPI from '../library/axisos'
 
 function Home() {
     const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +29,7 @@ function Home() {
         setIsLoading(true)
         setError(null)
         try {
-            const { data } = await axios.get(Base_URL + '/todos?_sort=-datetime')
+            const { data } = await NoteAPI.get('/todos?_sort=-datetime')
             setNotes(data)
             setFilteredNotes(data)
         } catch (err) {
@@ -49,7 +47,7 @@ function Home() {
         setIsLoading(true)
         setError(null)
         try {
-            await axios.post(Base_URL + '/todos', {
+            await NoteAPI.post('/todos', {
                 title: note.title,
                 datetime: new Date(),
                 status: ''
@@ -82,7 +80,7 @@ function Home() {
         setIsLoading(true)
         setError(null)
         try {
-            await axios.put(Base_URL + '/todos/' + id, {
+            await NoteAPI.put('/todos/' + id, {
                 title: editValue.title,
                 datetime: new Date(),
                 status: editValue.status
@@ -122,7 +120,7 @@ function Home() {
                 confirmButtonText: "Yes, delete it!"
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.delete(Base_URL + '/todos/' + id)
+                    await NoteAPI.delete('/todos/' + id)
                     fetchNotes()
                     Swal.fire({
                         title: "Deleted!",
@@ -140,13 +138,24 @@ function Home() {
     }
 
     const buttonChangeStatus = async (note, status) => {
-        await axios.patch(Base_URL + '/todos/' + note.id, {
+        await NoteAPI.patch('/todos/' + note.id, {
             title: note.title,
             datetime: new Date(),
             status
         })
         fetchNotes()
         setEditStatusMode('')
+        toast.success('Status has been edited!', {
+            position: "top-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            });
     }
 
     useEffect(() => {

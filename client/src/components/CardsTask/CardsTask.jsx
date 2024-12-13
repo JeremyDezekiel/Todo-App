@@ -4,7 +4,6 @@ import deleteIcon from '../../assets/delete-icon.png'
 
 function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoading, error, filteredNotes, setEditStatusMode, editStatusMode, buttonChangeStatus }) {
     const [editMode, setEditMode] = useState('')
-    // const [editStatusMode, setEditStatusMode] = useState('')
 
     const handleEdit = (note) => {
         setEditMode(note.id)
@@ -14,35 +13,6 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
     const handleEditStatusMode = (note) => {
         setEditStatusMode(note.id)
     }
-
-    // const handleEditStatus = async (note) => {
-    //     // setEditStatusMode(note.id)
-    //     // setEditStatusProgress({ title: note.title, status: note.status})
-    //     if (note.status === 'On Going') {
-    //         await axios.patch('http://localhost:3000/todos/' + note.id, {
-    //             title: note.title,
-    //             datetime: new Date(),
-    //             status: "Completed"
-    //         })
-    //     } else if (note.status === 'Completed') {
-    //         await axios.patch('http://localhost:3000/todos/' + note.id, {
-    //             title: note.title,
-    //             datetime: new Date(),
-    //             status: "On Going"
-    //         })
-    //     }
-    //     fetchNotes()
-    // }
-
-    // const buttonChangeStatus = async (note, status) => {
-    //         await axios.patch('http://localhost:3000/todos/' + note.id, {
-    //             title: note.title,
-    //             datetime: new Date(),
-    //             status
-    //     })
-    //     fetchNotes()
-    //     setEditStatusMode('')
-    // }
 
     return (
         <div>
