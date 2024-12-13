@@ -5,6 +5,20 @@
 :root {
   --toastify-color-success: #80476F !important;
   --toastify-color-info: #FEC347 !important;
+
+  font-family: "Fredoka", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.league-spartan {
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
 
 /* :root {

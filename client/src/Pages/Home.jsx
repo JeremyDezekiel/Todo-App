@@ -170,7 +170,7 @@ function Home() {
                 <div className='grid grid-rows-2 grid-cols-3 gap-3'>
                     <div className='col-span-2 row-span-2'>
                         <CardsProcess notes={notes}/>
-                        <h1 className='font-bold text-5xl mb-5 mt-5'>My List</h1>
+                        <h1 className='font-bold text-3xl mb-5 mt-5'>My List</h1>
                         <div>
                             <CardsTask fetchNotes={fetchNotes} notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} filteredNotes={filteredNotes} />
                         </div>
