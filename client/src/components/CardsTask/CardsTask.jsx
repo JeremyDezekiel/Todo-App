@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import editIcon from '../../assets/edit-icon.png'
 import deleteIcon from '../../assets/delete-icon.png'
-import axios from 'axios'
 
-function CardsTask({ fetchNotes, notes, deleteNote, editNote, editValue, setEditValue, isLoading, error, filteredNotes }) {
+function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoading, error, filteredNotes, setEditStatusMode, editStatusMode, buttonChangeStatus }) {
     const [editMode, setEditMode] = useState('')
-    const [editStatusMode, setEditStatusMode] = useState('')
+    // const [editStatusMode, setEditStatusMode] = useState('')
 
     const handleEdit = (note) => {
         setEditMode(note.id)
@@ -35,49 +34,15 @@ function CardsTask({ fetchNotes, notes, deleteNote, editNote, editValue, setEdit
     //     fetchNotes()
     // }
 
-    const buttonOnGoing = async (note) => {
-        if (note.status !== 'On Going') {
-            await axios.patch('http://localhost:3000/todos/' + note.id, {
-                title: note.title,
-                datetime: new Date(),
-                status: "On Going"
-        })
-        fetchNotes()
-        }
-    }
-
-    const buttonScheduled = async (note) => {
-        if (note.status !== 'Scheduled') {
-            await axios.patch('http://localhost:3000/todos/' + note.id, {
-                title: note.title,
-                datetime: new Date(),
-                status: "Scheduled"
-        })
-        fetchNotes()
-        }
-    }
-
-    const buttonCompleted = async (note) => {
-        if (note.status !== 'Completed') {
-            await axios.patch('http://localhost:3000/todos/' + note.id, {
-                title: note.title,
-                datetime: new Date(),
-                status: "Completed"
-        })
-        fetchNotes()
-        }
-    }
-
-    const buttonCanceled = async (note) => {
-        if (note.status !== 'Canceled') {
-            await axios.patch('http://localhost:3000/todos/' + note.id, {
-                title: note.title,
-                datetime: new Date(),
-                status: "Canceled"
-        })
-        fetchNotes()
-        }
-    }
+    // const buttonChangeStatus = async (note, status) => {
+    //         await axios.patch('http://localhost:3000/todos/' + note.id, {
+    //             title: note.title,
+    //             datetime: new Date(),
+    //             status
+    //     })
+    //     fetchNotes()
+    //     setEditStatusMode('')
+    // }
 
     return (
         <div>
@@ -106,10 +71,10 @@ function CardsTask({ fetchNotes, notes, deleteNote, editNote, editValue, setEdit
                             ) : editStatusMode === note.id ? (
                                 <>
                                     <div className='flex items-center gap-2'>
-                                            <button className='border w-5 h-5 rounded-full bg-[#5694F2]' onClick={() => buttonOnGoing(note)}></button>
-                                            <button className='border w-5 h-5 rounded-full bg-[#FEC347]' onClick={() => buttonScheduled(note)}></button>
-                                            <button className='border w-5 h-5 rounded-full bg-[#53C2C5]' onClick={() => buttonCompleted(note)}></button>
-                                            <button className='border w-5 h-5 rounded-full bg-[#F26E56]' onClick={() => buttonCanceled(note)}></button>
+                                            <button className='border w-5 h-5 rounded-full bg-[#5694F2]' onClick={() => buttonChangeStatus(note, 'On Going')}></button>
+                                            <button className='border w-5 h-5 rounded-full bg-[#FEC347]' onClick={() => buttonChangeStatus(note, 'Scheduled')}></button>
+                                            <button className='border w-5 h-5 rounded-full bg-[#53C2C5]' onClick={() => buttonChangeStatus(note, 'Completed')}></button>
+                                            <button className='border w-5 h-5 rounded-full bg-[#F26E56]' onClick={() => buttonChangeStatus(note, 'Canceled')}></button>
                                         <p className='text-xl'>{note.title}</p>
                                     </div>
                                     <div className='flex gap-4 items-center'>

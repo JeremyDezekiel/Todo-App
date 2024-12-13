@@ -24,6 +24,8 @@ function Home() {
     const [editValue, setEditValue] = useState({
         title: '',
     })
+    const [editStatusMode, setEditStatusMode] = useState('')
+    
 
     const fetchNotes = async () => {
         setIsLoading(true)
@@ -137,6 +139,16 @@ function Home() {
         }
     }
 
+    const buttonChangeStatus = async (note, status) => {
+        await axios.patch(Base_URL + '/todos/' + note.id, {
+            title: note.title,
+            datetime: new Date(),
+            status
+        })
+        fetchNotes()
+        setEditStatusMode('')
+    }
+
     useEffect(() => {
         fetchNotes()
     }, [])
@@ -172,7 +184,7 @@ function Home() {
                         <CardsProcess notes={notes}/>
                         <h1 className='font-bold text-3xl mb-5 mt-5'>My List</h1>
                         <div>
-                            <CardsTask fetchNotes={fetchNotes} notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} filteredNotes={filteredNotes} />
+                            <CardsTask notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} filteredNotes={filteredNotes} setEditStatusMode={setEditStatusMode} editStatusMode={editStatusMode} buttonChangeStatus={buttonChangeStatus}/>
                         </div>
                     </div>
                     <div className='row-span-3'>
