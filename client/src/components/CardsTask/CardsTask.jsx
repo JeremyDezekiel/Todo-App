@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import editIcon from '../../assets/edit-icon.png'
 import deleteIcon from '../../assets/delete-icon.png'
+import axios from 'axios'
 
-function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoading, error, editStatus, editStatusProgress, setEditStatusProgress, filteredNotes }) {
+function CardsTask({ fetchNotes, notes, deleteNote, editNote, editValue, setEditValue, isLoading, error, filteredNotes }) {
     const [editMode, setEditMode] = useState('')
-    const [editStatusMode, setEditStatusMode] = useState('')
 
-    const handleEdit = ((note) => {
+    const handleEdit = (note) => {
         setEditMode(note.id)
-        setEditValue({ title: note.title, status: note.status})
-    })
+        setEditValue({ title: note.title, status: note.status })
+    }
 
-    const handleEditStatus = ((note) => {
-        setEditStatusMode(note.id)
-        setEditStatusProgress({ title: note.title, status: note.status})
-    })
+    const handleEditStatus = async (note) => {
+        // setEditStatusMode(note.id)
+        // setEditStatusProgress({ title: note.title, status: note.status})
+        if (note.status === 'On Going') {
+            await axios.patch('http://localhost:3000/todos/' + note.id, {
+                title: note.title,
+                datetime: new Date(),
+                status: "Completed"
+            })
+        } else if (note.status === 'Completed') {
+            await axios.patch('http://localhost:3000/todos/' + note.id, {
+                title: note.title,
+                datetime: new Date(),
+                status: "On Going"
+            })
+        }
+        fetchNotes()
+    }
 
     return (
         <div>
@@ -31,7 +45,7 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
                     <span>No List</span>
                 </div>
             ) : (
-                notes?.map((note) => (
+                filteredNotes?.map((note) => (
                     <div key={note.id} className='cardlist border mb-5 py-3 px-3 flex justify-between'>
                         {
                             editMode === note.id ? (
@@ -44,7 +58,13 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
                             ) : (
                                 <>
                                     <div className='flex items-center gap-2'>
-                                        <button className='border w-5 h-5 rounded-full bg-[#E0E0E0]' onClick={() => handleEditStatus(note)}></button>
+                                        <button className={`border w-5 h-5 rounded-full
+                                                        ${note.status === 'Completed' ? 'bg-[#53C2C5]' :
+                                                            note.status === 'On Going' ? 'bg-[#5694F2]' :
+                                                            note.status === 'Scheduled' ? 'bg-[#FEC347]' :
+                                                            note.status === 'Canceled' ? 'bg-[#F26E56]' :
+                                                            'bg-[#F0F0F0]'}`}
+                                            onClick={() => handleEditStatus(note)}></button>
                                         <p className='text-xl'>{note.title}</p>
                                     </div>
                                     <div className='flex gap-4 items-center'>
@@ -57,7 +77,7 @@ function CardsTask({ notes, deleteNote, editNote, editValue, setEditValue, isLoa
                     </div>
                 ))
             )}
-            <div className='grid grid-cols-2 gap-2' onSubmit={(e) => editStatus(e)}>
+            <div className='grid grid-cols-2 gap-2'>
                 <button className='border w-5 h-5 rounded-full bg-[#5694F2]'></button>
                 <button className='border w-5 h-5 rounded-full bg-[#FEC347]'></button>
                 <button className='border w-5 h-5 rounded-full bg-[#53C2C5]'></button>

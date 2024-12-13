@@ -9,11 +9,11 @@ function CardsProcess({ notes }) {
     const countStatuses = (notes) => {
         return notes.reduce((acc, note) => {
             if (note.status === 'On Going') acc.onGoing += 1
-            if (note.status === 'In Process') acc.inProcess += 1
+            if (note.status === 'Scheduled') acc.scheduled += 1
             if (note.status === 'Completed') acc.completed += 1
             if (note.status === 'Canceled') acc.canceled += 1
             return acc
-        }, { onGoing: 0, inProcess: 0, completed: 0, canceled: 0 })
+        }, { onGoing: 0, scheduled: 0, completed: 0, canceled: 0 })
     }
     const statusCounts = countStatuses(notes)
 
@@ -33,8 +33,8 @@ function CardsProcess({ notes }) {
                     <img className='w-12' src={TaskInProgress} alt='taskinprogress'/>
                 </div>
                 <div>
-                    <h1 className='font-medium'>In Process</h1>
-                    <span className='text-xs'>{statusCounts.inProcess} task</span>
+                    <h1 className='font-medium'>Scheduled</h1>
+                    <span className='text-xs'>{statusCounts.scheduled} task</span>
                 </div>
             </div>
             <div className='bg-[#53C2C5] p-3 flex gap-3 rounded-2xl'>

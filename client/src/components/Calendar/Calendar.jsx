@@ -42,13 +42,13 @@ function Calendar() {
     const todayYear = today.getFullYear()
     return (
         <div className='text-center'>
-            <div className='bg-[#02B8FF] rounded-t-[5px] grid grid-flow-col grid-cols-5 items-center'>
-                <button className='m-[5px] py-[5px] cursor-pointer bg-[#007BFF] text-white rounded-[5px] hover:bg-[#0056b3]' onClick={() => changeMonth(-1)}>Prev</button>
+            <div className='bg-[#A594F9] rounded-t-[5px] grid grid-flow-col grid-cols-5 items-center'>
+                <button className='m-[5px] py-[5px] cursor-pointer bg-[#7E60BF] text-white rounded-[5px] hover:bg-[#7556B8]' onClick={() => changeMonth(-1)}>Prev</button>
                 <h1 className='col-span-3 text-2xl'>{`${monthName} ${year}`}</h1>
-                <button className='m-[5px] py-[5px] px-[10px] cursor-pointer bg-[#007BFF] text-white rounded-[5px] hover:bg-[#0056b3]' onClick={() => changeMonth(1)}>Next</button>
+                <button className='m-[5px] py-[5px] px-[10px] cursor-pointer bg-[#7E60BF] text-white rounded-[5px] hover:bg-[#7556B8]' onClick={() => changeMonth(1)}>Next</button>
             </div>
             <div>
-                <div className='bg-[#95E1FF] grid grid-cols-7 gap-2 mb-2'>
+                <div className='bg-[#CDC1FF] grid grid-cols-7 gap-2 mb-2'>
                     {dayNames.map((day, index) => (
                         <div key={index} className='p-3 text-center text-sm font-bold'>{day}</div>
                     ))}
@@ -60,7 +60,7 @@ function Calendar() {
                         } else {
                             const isToday = day === todayDate && currentDate.getMonth() === todayMonth && currentDate.getFullYear() === todayYear
                             return (
-                                <div key={index} className={`p-3 text-center text-sm ${isToday ? 'bg-[#007BFF] text-white rounded-[5px] font-bold' : 'bg-[#f0f0f0] rounded-[5px]'}`}>
+                                <div key={index} className={`p-3 text-center text-sm ${isToday ? 'bg-[#D4BEE4] text-white rounded-[5px] font-bold' : 'bg-[#f0f0f0] rounded-[5px]'}`}>
                                     {day}
                                 </div>
                             )

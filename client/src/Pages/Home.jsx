@@ -24,9 +24,6 @@ function Home() {
     const [editValue, setEditValue] = useState({
         title: '',
     })
-    const [editStatusProgress, setEditStatusProgress] = useState({
-        status: 'On Going'
-    })
 
     const fetchNotes = async () => {
         setIsLoading(true)
@@ -34,6 +31,7 @@ function Home() {
         try {
             const { data } = await axios.get(Base_URL + '/todos?_sort=-datetime')
             setNotes(data)
+            setFilteredNotes(data)
         } catch (err) {
             console.error(err)
             setError(err)
@@ -52,7 +50,7 @@ function Home() {
             await axios.post(Base_URL + '/todos', {
                 title: note.title,
                 datetime: new Date(),
-                status: 'On Going'
+                status: ''
             })
             setNote({
                 title: '',
@@ -139,28 +137,6 @@ function Home() {
         }
     }
 
-    const editStatus = async (id) => {
-        setIsLoading(true)
-        setError(null)
-        try {
-            await axios.put(Base_URL + '/todos/' + id, {
-                title: editStatusProgress.title,
-                datetime: new Date(),
-                status: editStatusProgress.status
-            })
-            setEditStatusProgress({
-                title: '',
-                status: ''
-            })
-            fetchNotes()
-        } catch (err) {
-            console.error(err)
-            setError(err)
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
     useEffect(() => {
         fetchNotes()
     }, [])
@@ -182,7 +158,7 @@ function Home() {
                         <img className='w-14' src={profilePicture} alt='profilepicture' />
                         <div>
                             <h1 className='text-2xl font-semibold'>Hi, JeanneDe</h1>
-                            <span className='text-xs'>Your Daily adventure starts now</span>
+                            <span className='text-xs'>Your daily adventure starts now !</span>
                         </div>
                     </div>
                     <div>
@@ -196,7 +172,7 @@ function Home() {
                         <CardsProcess notes={notes}/>
                         <h1 className='font-bold text-5xl mb-5 mt-5'>My List</h1>
                         <div>
-                            <CardsTask notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} editStatus={editStatus} editStatusProgress={editStatusProgress} setEditStatusProgress={setEditStatusProgress} filteredNotes={filteredNotes} />
+                            <CardsTask fetchNotes={fetchNotes} notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} filteredNotes={filteredNotes} />
                         </div>
                     </div>
                     <div className='row-span-3'>
