@@ -146,7 +146,7 @@ function Home() {
         fetchNotes()
         setEditStatusMode('')
         toast.success('Status has been edited!', {
-            position: "top-left",
+            position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -174,12 +174,18 @@ function Home() {
         <div className='container mx-auto'>
             <Navbar />
             <div>
-                <div className='flex justify-between mb-5'>
-                    <div className='flex gap-3'>
+                <div className='2xl:flex 2xl:justify-between 2xl:mb-3
+                                md:flex md:justify-between md:items-center md:mb-1
+                                mb-3
+                '>
+                    <div className='2xl:flex 2xl:gap-3
+                                    md:flex md:gap-3
+                                    flex gap-3 mb-5
+                    '>
                         <img className='w-14' src={profilePicture} alt='profilepicture' />
                         <div>
                             <h1 className='text-2xl font-semibold'>Hi, JeanneDe</h1>
-                            <span className='text-xs'>Your daily adventure starts now !</span>
+                            <span className='text-sm'>Your daily adventure starts now !</span>
                         </div>
                     </div>
                     <div>
@@ -188,16 +194,22 @@ function Home() {
                         </form>
                     </div>
                 </div>
-                <div className='grid grid-rows-2 grid-cols-3 gap-3'>
-                    <div className='col-span-2 row-span-2'>
+                <div className='lg:grid lg:grid-cols-3 lg:gap-3'>
+                    <div className='lg:col-span-2'>
                         <CardsProcess notes={notes}/>
+                        <div className='mt-4 block lg:hidden'>
+                            <form className='flex gap-2' onSubmit={(e) => addNote(e)}>
+                                <input type='text' placeholder='Write Your New Task' className='border rounded-lg py-3 px-3 w-full' value={note.title} onChange={(e) => setNote({ ...note, title: e.target.value })} />
+                                <button className='font-bold text-[#7d7c7c]' type='submit'>+AddList</button>
+                            </form>
+                        </div>
                         <h1 className='font-bold text-3xl mb-5 mt-5'>My List</h1>
                         <div>
                             <CardsTask notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} filteredNotes={filteredNotes} setEditStatusMode={setEditStatusMode} editStatusMode={editStatusMode} buttonChangeStatus={buttonChangeStatus}/>
                         </div>
                     </div>
-                    <div className='row-span-3'>
-                        <Calendar />
+                    <div className='lg:block hidden'>
+                        <Calendar/>
                         <div className='mt-4'>
                             <form className='flex gap-2' onSubmit={(e) => addNote(e)}>
                                 <input type='text' placeholder='Write Your New Task' className='border rounded-lg py-3 px-3 w-full' value={note.title} onChange={(e) => setNote({ ...note, title: e.target.value })} />

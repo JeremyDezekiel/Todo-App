@@ -28,7 +28,7 @@ function LiveTime() {
     const year = currentDate.getFullYear()
 
     return (
-        <div className='text-center'>
+        <div className='text-center hidden md:block'>
             <h2>{`${dayOfWeek}, ${month} ${dayOfMonth} ${year}`}</h2>
             <h3>{time}</h3>   
         </div>
