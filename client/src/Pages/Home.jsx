@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './Home.css'
 import Navbar from '../components/Navbar/Navbar'
 import CardsProcess from '../components/CardsProcess/CardsProcess'
 import Calendar from '../components/Calendar/Calendar'
@@ -173,15 +172,9 @@ function Home() {
     return (
         <div className='container mx-auto'>
             <Navbar />
-            <div>
-                <div className='2xl:flex 2xl:justify-between 2xl:mb-3
-                                md:flex md:justify-between md:items-center md:mb-1
-                                mb-3
-                '>
-                    <div className='2xl:flex 2xl:gap-3
-                                    md:flex md:gap-3
-                                    flex gap-3 mb-5
-                    '>
+            <main>
+                <header className='2xl:flex 2xl:justify-between 2xl:mb-3 md:flex md:justify-between md:items-center md:mb-1 mb-3'>
+                    <div className='flex gap-3 mb-5'>
                         <img className='w-14' src={profilePicture} alt='profilepicture' />
                         <div>
                             <h1 className='text-2xl font-semibold'>Hi, JeanneDe</h1>
@@ -193,8 +186,8 @@ function Home() {
                             <input type='text' placeholder='Search' className='search w-full border-2 border-transparent bg-no-repeat bg-[10px] py-3 pe-5 ps-11 rounded-full text-base bg-[#C9CACA] text-[#a6a6a6]' onChange={(e) => setSearch(e.target.value)} />
                         </form>
                     </div>
-                </div>
-                <div className='lg:grid lg:grid-cols-3 lg:gap-3'>
+                </header>
+                <section className='lg:grid lg:grid-cols-3 lg:gap-3'>
                     <div className='lg:col-span-2'>
                         <CardsProcess notes={notes}/>
                         <div className='mt-4 block lg:hidden'>
@@ -208,7 +201,7 @@ function Home() {
                             <CardsTask notes={notes} deleteNote={deleteNote} editNote={editNote} editValue={editValue} setEditValue={setEditValue} isLoading={isLoading} error={error} filteredNotes={filteredNotes} setEditStatusMode={setEditStatusMode} editStatusMode={editStatusMode} buttonChangeStatus={buttonChangeStatus}/>
                         </div>
                     </div>
-                    <div className='lg:block hidden'>
+                    <aside className='lg:block hidden'>
                         <Calendar/>
                         <div className='mt-4'>
                             <form className='flex gap-2' onSubmit={(e) => addNote(e)}>
@@ -216,9 +209,9 @@ function Home() {
                                 <button className='font-bold text-[#7d7c7c]' type='submit'>+AddList</button>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </aside>
+                </section>
+            </main>
             <ToastContainer />
         </div>
     )
