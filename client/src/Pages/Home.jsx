@@ -43,6 +43,20 @@ function Home() {
 
     const addNote = async (e) => {
         e.preventDefault()
+        if (!note.title.trim()) {
+            toast.error('Title cannot be empty!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            })
+            return
+        }
         setIsLoading(true)
         setError(null)
         try {
@@ -65,7 +79,7 @@ function Home() {
                 progress: undefined,
                 theme: "light",
                 transition: Bounce,
-                });
+                })
         } catch (err) {
             console.error(err)
             setError(err)
@@ -76,6 +90,20 @@ function Home() {
 
     const editNote = async (e, id) => {
         e.preventDefault()
+        if (!editValue.title.trim()) {
+            toast.error('Title cannot be empty!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            })
+            return
+        }
         setIsLoading(true)
         setError(null)
         try {
@@ -98,7 +126,7 @@ function Home() {
                 progress: undefined,
                 theme: "light",
                 transition: Bounce,
-                });
+                })
         } catch (err) {
             console.error(err)
             setError(err)
@@ -108,6 +136,8 @@ function Home() {
     }
 
     const deleteNote = async (id) => {
+        setIsLoading(true)
+        setError(null)
         try {
             Swal.fire({
                 title: "Are you sure?",
@@ -128,7 +158,7 @@ function Home() {
                     })
                 }
             })    
-        } catch (error) {
+        } catch (err) {
             console.error(err)
             setError(err)
         } finally {
@@ -137,24 +167,56 @@ function Home() {
     }
 
     const buttonChangeStatus = async (note, status) => {
-        await NoteAPI.patch('/todos/' + note.id, {
-            title: note.title,
-            datetime: new Date(),
-            status
-        })
-        fetchNotes()
-        setEditStatusMode('')
-        toast.success('Status has been edited!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-            });
+        if (status === note.status) {
+            toast.success('no change in status!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                })
+                setEditStatusMode('')
+                return
+        }
+        setIsLoading(true)
+        setError(null)
+        try {
+            await NoteAPI.patch('/todos/' + note.id, {
+                title: note.title,
+                datetime: new Date(),
+                status
+            })
+            fetchNotes()
+            setEditStatusMode('')
+
+            const statusMessages = {
+                'On Going': 'Status has been changed to On going!',
+                'Scheduled': 'Status has been changed to Scheduled!',
+                'Completed': 'Status has been changed to Completed!',
+                'Canceled': 'Status has been changed to Canceled!',
+            }
+
+            if (statusMessages[status]) {
+                toast.success(statusMessages[status], {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                })
+            }
+        } catch (err) {
+            console.error(err)
+            setError(err)
+        }  
     }
 
     useEffect(() => {
