@@ -56,7 +56,7 @@ A modern, responsive, and interactive To-Do List web application built with Reac
 Clone the repository:
 
 ```sh
-git clone https://github.com/yourusername/memoire-todo.git
+git clone https://github.com/jeremydezekiel/memoire-todo.git
 cd memoire-todo
 ```
 
