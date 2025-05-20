@@ -1,6 +1,6 @@
 # memoire. 📝
 
-A modern, responsive, and interactive To-Do List web application built with React, Vite, TailwindCSS, and a mock REST API powered by JSON Server. Designed for productivity, memoire. helps you organize, track, and manage your daily tasks with ease.
+A modern, responsive, and interactive To-Do List web application built with React, Vite, TailwindCSS, and a mock REST API powered by JSON Server. Designed for productivity, memoire helps you organize, track, and manage your daily tasks with ease.
 
 ![screenshot](client/public/IconHtml.png)
 
